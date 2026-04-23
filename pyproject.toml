@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68.0", "setuptools-scm>=8.0"]
+requires = ["setuptools>=68.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -10,6 +10,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [{ name = "Multek" }]
+keywords = ["agno", "agents", "llm", "toolkits", "guardrails", "hooks"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -22,6 +23,11 @@ classifiers = [
 ]
 dependencies = ["agno>=2.5.0"]
 
+[project.urls]
+Homepage = "https://github.com/multek/multek-agno"
+Repository = "https://github.com/multek/multek-agno"
+Issues = "https://github.com/multek/multek-agno/issues"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
@@ -32,6 +38,9 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"multek_agno.skills._bundled" = ["**/*.md", "**/*.py", "**/*.sh", "**/*.txt", "**/*.json"]
 
 [tool.ruff]
 target-version = "py310"

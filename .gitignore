@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
+*.pyo
 *.egg-info/
 dist/
 build/
@@ -10,3 +11,5 @@ build/
 .ruff_cache/
 .venv/
 *.so
+.env
+.env.*

@@ -39,10 +39,8 @@ def load_skills(
         for name in include:
             skill_dir = bundled_path / name
             if not skill_dir.is_dir():
-                raise FileNotFoundError(
-                    f"Bundled skill '{name}' not found. "
-                    f"Available: {[p.name for p in bundled_path.iterdir() if p.is_dir() and not p.name.startswith('__')]}"
-                )
+                available = [p.name for p in bundled_path.iterdir() if p.is_dir() and not p.name.startswith("__")]
+                raise FileNotFoundError(f"Bundled skill '{name}' not found. Available: {available}")
             loaders.append(LocalSkills(str(skill_dir)))
     else:
         loaders.append(LocalSkills(str(bundled_path)))
