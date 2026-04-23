@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "multek-agno"
-version = "0.1.0"
+version = "0.2.0"
 description = "Reusable toolkits, guardrails, and hooks for the Agno Agents SDK"
 readme = "README.md"
 license = "MIT"
@@ -21,7 +21,10 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
 ]
-dependencies = ["agno>=2.5.0"]
+dependencies = [
+    "agno>=2.5.0",
+    "anyio>=4.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/multek/multek-agno"
@@ -34,6 +37,9 @@ dev = [
     "pytest-asyncio>=0.23",
     "ruff>=0.4",
     "mypy>=1.10",
+]
+terminal = [
+    "prompt_toolkit>=3.0",
 ]
 
 [tool.setuptools.packages.find]

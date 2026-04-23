@@ -152,3 +152,53 @@ def test_allowed_cdn_libs_none_shows_all() -> None:
     assert toolkit.instructions is not None
     for key in CDN_URLS:
         assert key in toolkit.instructions
+
+
+# ---------------------------------------------------------------------------
+# external_execution mode
+# ---------------------------------------------------------------------------
+
+
+def test_external_execution_registers_tool_for_pause() -> None:
+    toolkit = VisualizerToolkit(external_execution=True)
+    assert "create_html_widget" in toolkit.functions
+    assert toolkit.functions["create_html_widget"].external_execution is True
+
+
+def test_external_execution_default_off() -> None:
+    toolkit = VisualizerToolkit()
+    assert toolkit.external_execution is False
+    assert toolkit.functions["create_html_widget"].external_execution is not True
+
+
+def test_external_execution_conflicts_with_output_dir() -> None:
+    with pytest.raises(ValueError, match="incompatible with output_dir"):
+        VisualizerToolkit(external_execution=True, output_dir="/tmp/widgets")
+
+
+def test_external_execution_body_raises_if_reached() -> None:
+    """If Agno's pause machinery fails, direct call should fail loudly."""
+    toolkit = VisualizerToolkit(external_execution=True)
+    with pytest.raises(RuntimeError, match="pause machinery"):
+        toolkit.create_html_widget(
+            html_content="<div>hi</div>",
+            title="x",
+            description="y",
+        )
+
+
+def test_external_execution_silent_sets_flag_on_function() -> None:
+    toolkit = VisualizerToolkit(external_execution=True, external_execution_silent=True)
+    assert toolkit.external_execution_silent is True
+    assert toolkit.functions["create_html_widget"].external_execution_silent is True
+
+
+def test_external_execution_silent_default_off() -> None:
+    toolkit = VisualizerToolkit(external_execution=True)
+    assert toolkit.external_execution_silent is False
+    assert toolkit.functions["create_html_widget"].external_execution_silent is not True
+
+
+def test_external_execution_silent_requires_external_execution() -> None:
+    with pytest.raises(ValueError, match="requires external_execution=True"):
+        VisualizerToolkit(external_execution_silent=True)
